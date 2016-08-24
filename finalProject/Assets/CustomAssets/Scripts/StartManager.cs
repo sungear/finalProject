@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class StartManager : MonoBehaviour {
 
@@ -20,12 +21,20 @@ public class StartManager : MonoBehaviour {
     public float timer = 50;
 
     public int diceValueSum;
+
+    private List<GameObject> diceList;
+
 	// Use this for initialization
-	void Start () {
+	void Start () {       
         diceNumber = Random.Range(minDiceNumber, maxDiceNumber);
+        diceList = new List<GameObject>();
 
         for (int x = 0; x < diceNumber; x++) {
-            GameObject newDice = (GameObject)Instantiate(dicePrefab, new Vector3(x, 0f, 0f), Quaternion.identity);
+            Quaternion randomRotation = Quaternion.Euler(Random.Range(0,4)*90, Random.Range(0,4)*90, Random.Range(0,4)*90);
+            GameObject newDice = (GameObject)Instantiate(dicePrefab, new Vector3(x, 0f, 0f), randomRotation);
+            diceList.Add(newDice);                        
+            int diceSide = newDice.GetComponentInChildren<Dice>().side;
+            diceValueSum += diceSide;
         }
 
         minSum = diceNumber;
@@ -38,6 +47,8 @@ public class StartManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        calculateDiceValue();
+
 	   goalSumText.text = "Goal : " + goalSum.ToString();
 
         timer -= Time.deltaTime;
@@ -49,4 +60,16 @@ public class StartManager : MonoBehaviour {
 
         
 	}
+
+    void calculateDiceValue() {
+        if (Input.GetKeyUp(KeyCode.Space)) {
+            if (diceValueSum > 0) {
+                diceValueSum = 0;
+            }          
+            for (int i = 0; i < diceList.Count; i++) {
+                int diceSide = diceList[i].GetComponentInChildren<Dice>().side;
+                diceValueSum += diceSide;
+            }
+        }
+    }
 }

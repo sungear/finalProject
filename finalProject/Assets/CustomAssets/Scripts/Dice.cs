@@ -1,28 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class Dice : MonoBehaviour {
 
-    public int side;
+    public int side = 0;
+    public Vector3 originalSide;
+    public Vector3 actualSide;
+
+    private float rotationX;
+    private float rotationY;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         side = getDiceFaceValue();
 
-       if (side > 0) {
-            print(side);
-       }
+       rotationX = transform.localEulerAngles.x;
+       rotationY = transform.localEulerAngles.y;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	   
-       /*side = getDiceFaceValue();
+       side = getDiceFaceValue();
+       print (transform.localEulerAngles.x);
+       print (transform.localEulerAngles.y);
 
-       if (side > 0) {
-            print(side);
-       }*/
+
+       // if (side > 0) {
+       //      print(side);
+       // }
+
+        DiceRotate();
 	}
 
     int getDiceFaceValue() {
@@ -41,5 +49,36 @@ public class Dice : MonoBehaviour {
         if (up <= -threshold) { return 6; }
 
         return 0;
+    }
+
+    void DiceRotate() {
+        // if (Input.GetKeyUp(KeyCode.LeftArrow)) {
+        //     transform.Rotate(0, -90f, 0, Space.World);
+        //     print("Left");
+        //     // print("angle : " + transform.rotation.y);
+        // }
+
+        if (Input.GetKeyUp(KeyCode.LeftArrow)) {
+            float newRotationY = rotationY-90f;
+            transform.Rotate(0, transform.localEulerAngles.y-90f, 0, Space.World);
+            // rotationY = newRotationY;
+            print("Left");
+            // print("angle : " + transform.rotation.y);
+        }
+
+        if (Input.GetKeyUp(KeyCode.RightArrow)) {
+            transform.Rotate(0, 90f, 0, Space.World);
+            print("Right");
+        }
+
+        if (Input.GetKeyUp(KeyCode.UpArrow)) {
+            transform.Rotate(-90f, 0, 0, Space.World);
+            print("Up");
+        }
+
+        if (Input.GetKeyUp(KeyCode.DownArrow)) {
+            transform.Rotate(90f, 0, 0, Space.World);
+            print("Down");
+        }
     }
 }
