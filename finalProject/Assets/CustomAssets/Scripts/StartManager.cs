@@ -30,7 +30,7 @@ public class StartManager : MonoBehaviour {
         diceList = new List<GameObject>();
 
         for (int x = 0; x < diceNumber; x++) {
-            Quaternion randomRotation = Quaternion.Euler(Random.Range(0,4)*90, Random.Range(0,4)*90, Random.Range(0,4)*90);
+            Quaternion randomRotation = Quaternion.Euler(Random.Range(0,4)*90, Random.Range(0,4)*90, 0);
             GameObject newDice = (GameObject)Instantiate(dicePrefab, new Vector3(x, 0f, 0f), randomRotation);
             diceList.Add(newDice);                        
             int diceSide = newDice.GetComponentInChildren<Dice>().side;
