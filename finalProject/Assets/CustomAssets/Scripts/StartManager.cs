@@ -24,8 +24,12 @@ public class StartManager : MonoBehaviour {
 
     private List<GameObject> diceList;
 
+    DiceRotation diceRotation;
+
 	// Use this for initialization
-	void Start () {       
+	void Start () {
+        diceRotation = dicePrefab.GetComponent<DiceRotation>();
+
         diceNumber = Random.Range(minDiceNumber, maxDiceNumber);
         diceList = new List<GameObject>();
 
@@ -58,8 +62,11 @@ public class StartManager : MonoBehaviour {
             print("game over");
         }
 
-        
 	}
+
+    public void CubeClicked(Transform transform) {
+        diceRotation.DiceRotate();
+    }
 
     void calculateDiceValue() {
         if (Input.GetKeyUp(KeyCode.Space)) {

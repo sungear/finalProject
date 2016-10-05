@@ -13,6 +13,7 @@ public class Dice : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {	   
        side = getDiceFaceValue();
+       // print("side = " + side);
 	}
 
     int getDiceFaceValue() {
