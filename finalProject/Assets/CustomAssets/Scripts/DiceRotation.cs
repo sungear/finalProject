@@ -10,6 +10,7 @@ public class DiceRotation : MonoBehaviour {
     float direction = 0;
     string clickedArrow = "";
     bool isOutOfBound = false;
+    bool isAtLimit = false;
 
     int[] possibleAngles = { 0, 90, 180, 270 };
     int index;
@@ -18,18 +19,20 @@ public class DiceRotation : MonoBehaviour {
 	void Start () {
         print("initial angle = " + transform.eulerAngles.y);
         // oldY = transform.eulerAngles.y;
-        // newY = oldY;       
+        // newY = oldY;     
+        oldY = transform.eulerAngles.y;
+        index = getIndex(oldY, possibleAngles);  
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        // DiceRotate();
+        DiceRotate();
 	}
 
     public void DiceRotate() {
 
         // print("updated angle = " + transform.eulerAngles.y);
-        print("clicked");
+        // print("clicked");
         // transform.Rotate(0, direction*Time.deltaTime*80f, 0, Space.World);
         // transform.Rotate(0, direction*Time.deltaTime*80f, 0, Space.World);
 
@@ -50,16 +53,31 @@ public class DiceRotation : MonoBehaviour {
 
         
         
-        // if (Input.GetKeyUp(KeyCode.LeftArrow)) {
-        //     clickedArrow = "Left";
-        //     oldY = transform.eulerAngles.y;
-        //     direction = -1;
-        //     newY = oldY-90f;
-        //     if (newY <= 0f ) {
-        //         newY += 360f;
-        //         isOutOfBound = true;
-        //     }
-        // }
+        if (Input.GetKeyUp(KeyCode.LeftArrow)) {            
+            print("index : " + index);            
+            print("oldY : " + oldY);
+            direction = -1;
+            // newY = oldY-90f;            
+            // if (newY < 0f ) {
+            //     newY += 360f;
+            //     isOutOfBound = true;
+            // }
+            if (index > 0) {
+                if (index == 1) {
+                    isAtLimit = true;
+                }
+                newY = possibleAngles[index - 1];
+                index--;
+            }
+            else {
+                newY = possibleAngles[possibleAngles.Length-1];
+                index = possibleAngles.Length-1;
+                isOutOfBound = true;
+            }
+            print("newY : " + newY);
+
+            oldY = transform.eulerAngles.y;
+        }
 
         // else if (Input.GetKeyUp(KeyCode.RightArrow)) {
         //     clickedArrow = "Right";
@@ -94,9 +112,10 @@ public class DiceRotation : MonoBehaviour {
         //     }
         // }
 
-        // if ((transform.eulerAngles.y > newY && !isOutOfBound)||(transform.eulerAngles.y < newY && isOutOfBound)) {
+        // if ((transform.eulerAngles.y > newY && !isOutOfBound)||(transform.eulerAngles.y < newY && transform.eulerAngles.y < oldY && isOutOfBound)
+        //     || (transform.eulerAngles.y > newY && transform.eulerAngles.y > oldY && isOutOfBound)) {
         //     transform.Rotate(0, direction*Time.deltaTime*80f, 0, Space.World);
-        //     if ((transform.eulerAngles.y <= newY&& !isOutOfBound)||(transform.eulerAngles.y >= newY && isOutOfBound)) {
+        //     if ((transform.eulerAngles.y < newY&& !isOutOfBound)||(transform.eulerAngles.y > newY && transform.eulerAngles.y > oldY && isOutOfBound)) {
         //         transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, newY, transform.localEulerAngles.z);
         //         oldY = 0;
         //         newY = 0;
@@ -104,6 +123,21 @@ public class DiceRotation : MonoBehaviour {
         //         isOutOfBound = false;
         //     }
         // }
+        if (transform.eulerAngles.y != newY) {
+            transform.Rotate(0, direction*Time.deltaTime*80f, 0, Space.World);
+            if (((newY == 0) && transform.eulerAngles.y > 0 && transform.eulerAngles.y < 2)
+                || ((newY == 270) && transform.eulerAngles.y > 268 && transform.eulerAngles.y < 272)
+                || ((newY == 180) && transform.eulerAngles.y > 178 && transform.eulerAngles.y < 182)
+                || ((newY == 90) && transform.eulerAngles.y > 88 && transform.eulerAngles.y < 92)) {
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, newY, transform.localEulerAngles.z);
+                // oldY = 0;
+                // newY = 0;
+                // direction = 0;
+                isOutOfBound = false;
+            }
+        }
+
+        print("angle : " + transform.eulerAngles.y);
     }
 
     private void rotationAnimation(float direction) {

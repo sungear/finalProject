@@ -26,15 +26,19 @@ public class StartManager : MonoBehaviour {
 
     DiceRotation diceRotation;
 
+
+    int[] possibleAngles = { 0, 90, 180, 270 };
+
 	// Use this for initialization
 	void Start () {
-        diceRotation = dicePrefab.GetComponent<DiceRotation>();
+        // diceRotation = dicePrefab.GetComponent<DiceRotation>();
 
         diceNumber = Random.Range(minDiceNumber, maxDiceNumber);
         diceList = new List<GameObject>();
 
         for (int x = 0; x < diceNumber; x++) {
             Quaternion randomRotation = Quaternion.Euler(Random.Range(0,4)*90, Random.Range(0,4)*90, 0);
+            // Quaternion randomRotation = Quaternion.Euler(possibleAngles[Random.Range(0,3)], possibleAngles[Random.Range(0,3)], 0);
             GameObject newDice = (GameObject)Instantiate(dicePrefab, new Vector3(x, 0f, 0f), randomRotation);
             diceList.Add(newDice);                        
             int diceSide = newDice.GetComponentInChildren<Dice>().side;
@@ -64,9 +68,9 @@ public class StartManager : MonoBehaviour {
 
 	}
 
-    public void CubeClicked(Transform transform) {
-        diceRotation.DiceRotate();
-    }
+    // public void CubeClicked(Transform transform) {
+    //     diceRotation.DiceRotate();
+    // }
 
     void calculateDiceValue() {
         if (Input.GetKeyUp(KeyCode.Space)) {
