@@ -37,8 +37,12 @@ public class StartManager : MonoBehaviour {
         diceList = new List<GameObject>();
 
         for (int x = 0; x < diceNumber; x++) {
-            Quaternion randomRotation = Quaternion.Euler(Random.Range(0,4)*90, Random.Range(0,4)*90, 0);
-            // Quaternion randomRotation = Quaternion.Euler(possibleAngles[Random.Range(0,3)], possibleAngles[Random.Range(0,3)], 0);
+            // Quaternion randomRotation = Quaternion.Euler(Random.Range(0,4)*90, Random.Range(0,4)*90, 0);
+            int randomX = Random.Range(0,4);
+            int randomY = Random.Range(0,4);
+            print("X Rotation : " + randomX);
+            print("Y Rotation : " + randomY);
+            Quaternion randomRotation = Quaternion.Euler(possibleAngles[randomX], possibleAngles[randomY], 0);
             GameObject newDice = (GameObject)Instantiate(dicePrefab, new Vector3(x, 0f, 0f), randomRotation);
             diceList.Add(newDice);                        
             int diceSide = newDice.GetComponentInChildren<Dice>().side;

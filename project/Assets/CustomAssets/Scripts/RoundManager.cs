@@ -17,7 +17,7 @@ public class RoundManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         calculateGoalSum = GetComponent<CalculateGoalSum>();
-        diceNumber = Random.Range(minDiceNumber, maxDiceNumber);
+        diceNumber = Random.Range(minDiceNumber, maxDiceNumber+1);
         goalSum = calculateGoalSum.GetGoalSum(diceNumber);
 
         diceNumberText.text = "There's " + diceNumber.ToString() + " dices";

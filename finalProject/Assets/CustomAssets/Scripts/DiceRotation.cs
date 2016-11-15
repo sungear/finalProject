@@ -7,21 +7,20 @@ public class DiceRotation : MonoBehaviour {
     float oldX = 0;
     float newY = 0;
     float newX = 0;
-    float direction = 0;
-    string clickedArrow = "";
-    bool isOutOfBound = false;
-    bool isAtLimit = false;
+    string direction = "";
+    int orientation = 0;
 
     int[] possibleAngles = { 0, 90, 180, 270 };
-    int index;
+    int indexY;
+    int indexX;
 
 	// Use this for initialization
 	void Start () {
-        print("initial angle = " + transform.eulerAngles.y);
-        // oldY = transform.eulerAngles.y;
-        // newY = oldY;     
+        print("initial angle = " + transform.eulerAngles.x);
         oldY = transform.eulerAngles.y;
-        index = getIndex(oldY, possibleAngles);  
+        oldX = transform.eulerAngles.x;
+        indexY = getIndex(oldY, possibleAngles);
+        indexX = getIndex(oldX, possibleAngles);
 	}
 	
 	// Update is called once per frame
@@ -29,124 +28,96 @@ public class DiceRotation : MonoBehaviour {
         DiceRotate();
 	}
 
-    public void DiceRotate() {
-
-        // print("updated angle = " + transform.eulerAngles.y);
-        // print("clicked");
-        // transform.Rotate(0, direction*Time.deltaTime*80f, 0, Space.World);
-        // transform.Rotate(0, direction*Time.deltaTime*80f, 0, Space.World);
-
-        // if (Input.GetKeyUp(KeyCode.LeftArrow)) {  
-        //     // direction = -1f;          
-        //     oldY = transform.rotation;
-        //     transform.rotation = oldY * Quaternion.Euler(0, -90, 0);
-        //     // if (newY > oldY) {
-        //     //     isOutOfBound = true;
-        //     //     if (isOutOfBound) {
-        //     //         if (transform.rotation != newY {
-        //     //             rotationAnimation(direction);
-        //     //             if transform.rotation 
-        //     //         }
-        //     //     }
-        //     // }
-        // }
-
-        
+    public void DiceRotate() {        
         
         if (Input.GetKeyUp(KeyCode.LeftArrow)) {            
-            print("index : " + index);            
-            print("oldY : " + oldY);
-            direction = -1;
-            // newY = oldY-90f;            
-            // if (newY < 0f ) {
-            //     newY += 360f;
-            //     isOutOfBound = true;
-            // }
-            if (index > 0) {
-                if (index == 1) {
-                    isAtLimit = true;
-                }
-                newY = possibleAngles[index - 1];
-                index--;
+            direction = "horizontal";
+            orientation = -1;
+            if (indexY > 0) {
+                newY = possibleAngles[indexY - 1];
+                indexY--;
             }
             else {
                 newY = possibleAngles[possibleAngles.Length-1];
-                index = possibleAngles.Length-1;
-                isOutOfBound = true;
+                indexY = possibleAngles.Length-1;
             }
-            print("newY : " + newY);
-
             oldY = transform.eulerAngles.y;
         }
 
-        // else if (Input.GetKeyUp(KeyCode.RightArrow)) {
-        //     clickedArrow = "Right";
-        //     oldY = transform.eulerAngles.y;
-        //     direction = 1;
-        //     newY = oldY+90f;
-        //     if (newY > 360) {
-        //         newY -= 360;
-        //         isOutOfBound = true;
-        //     }
-        // }
-
-        // else if (Input.GetKeyUp(KeyCode.UpArrow)) {
-        //     clickedArrow = "Up";
-        //     oldX = transform.eulerAngles.x;
-        //     direction = -1;
-        //     newX = oldX-90f;
-        //     if (newX < 0 ) {
-        //         newX += 360;
-        //         isOutOfBound = true;
-        //     }
-        // }
-
-        // else if (Input.GetKeyUp(KeyCode.DownArrow)) {
-        //     clickedArrow = "Down";
-        //     oldX = transform.eulerAngles.x;
-        //     direction = 1;
-        //     newX = oldX+90f;
-        //     if (newX > 360) {
-        //         newX -= 360;
-        //         isOutOfBound = true;
-        //     }
-        // }
-
-        // if ((transform.eulerAngles.y > newY && !isOutOfBound)||(transform.eulerAngles.y < newY && transform.eulerAngles.y < oldY && isOutOfBound)
-        //     || (transform.eulerAngles.y > newY && transform.eulerAngles.y > oldY && isOutOfBound)) {
-        //     transform.Rotate(0, direction*Time.deltaTime*80f, 0, Space.World);
-        //     if ((transform.eulerAngles.y < newY&& !isOutOfBound)||(transform.eulerAngles.y > newY && transform.eulerAngles.y > oldY && isOutOfBound)) {
-        //         transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, newY, transform.localEulerAngles.z);
-        //         oldY = 0;
-        //         newY = 0;
-        //         direction = 0;
-        //         isOutOfBound = false;
-        //     }
-        // }
-        if (transform.eulerAngles.y != newY) {
-            transform.Rotate(0, direction*Time.deltaTime*80f, 0, Space.World);
-            if (((newY == 0) && transform.eulerAngles.y > 0 && transform.eulerAngles.y < 2)
-                || ((newY == 270) && transform.eulerAngles.y > 268 && transform.eulerAngles.y < 272)
-                || ((newY == 180) && transform.eulerAngles.y > 178 && transform.eulerAngles.y < 182)
-                || ((newY == 90) && transform.eulerAngles.y > 88 && transform.eulerAngles.y < 92)) {
-                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, newY, transform.localEulerAngles.z);
-                // oldY = 0;
-                // newY = 0;
-                // direction = 0;
-                isOutOfBound = false;
+        else if (Input.GetKeyUp(KeyCode.RightArrow)) {            
+            direction = "horizontal";
+            orientation = 1;
+            if (indexY < possibleAngles.Length-1) {
+                newY = possibleAngles[indexY + 1];
+                indexY++;
             }
+            else {
+                newY = possibleAngles[0];
+                indexY = 0;
+            }
+            oldY = transform.eulerAngles.y;
         }
 
-        print("angle : " + transform.eulerAngles.y);
-    }
+        else if (Input.GetKeyUp(KeyCode.UpArrow)) { 
+            print("OldX = " + oldX);                       
+            direction = "vertical";
+            orientation = -1;
+            if (indexX > 0) {
+                newX = possibleAngles[indexX - 1];
+                indexX--;
+            }
+            else {
+                newX = possibleAngles[possibleAngles.Length-1];
+                indexX = possibleAngles.Length-1;
+            }
+            print("NewX = " + newX);  
+            oldX = transform.eulerAngles.x;
+        }
 
-    private void rotationAnimation(float direction) {
-        transform.Rotate(0, direction*Time.deltaTime*80f, 0, Space.World);
+        else if (Input.GetKeyUp(KeyCode.DownArrow)) {             
+            print("OldX = " + oldX);                       
+            direction = "vertical";
+            orientation = 1;
+            if (indexX < possibleAngles.Length-1) {
+                newX = possibleAngles[indexX + 1];
+                indexX++;
+            }
+            else {
+                newX = possibleAngles[0];
+                indexX = 0;
+            }
+            print("NewX = " + newX);  
+            oldX = transform.eulerAngles.x;
+        }
+
+        if (direction == "horizontal") {            
+            if (Mathf.Abs(newY-transform.eulerAngles.y) > 2) {
+                transform.Rotate(0, orientation*Time.deltaTime*80f, 0, Space.World);
+            }
+            else {
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, newY, transform.localEulerAngles.z);
+                // print("angle : " + transform.eulerAngles.y);
+                direction = "";
+                orientation = 0;
+            }        
+        }
+        else if (direction == "vertical"){            
+            if (Mathf.Abs(newX-transform.eulerAngles.x) > 2) {
+                transform.Rotate(orientation*Time.deltaTime*80f, 0, 0, Space.World);
+                print("angle : " + transform.eulerAngles.x);
+            }
+            else {
+                print("stop");
+                transform.localEulerAngles = new Vector3(newX, transform.localEulerAngles.y, transform.localEulerAngles.z);
+                direction = "";
+                orientation = 0;
+            }
+        }
     }
 
     private int getIndex(float oriPos, int[] posTable) {
         for (int i = 0; i < posTable.Length; i++) {
-            if (oriPos == posTable[i]) {
+            if (Mathf.Abs(oriPos - posTable[i]) < 1) {
                 return i;
             }
         }
