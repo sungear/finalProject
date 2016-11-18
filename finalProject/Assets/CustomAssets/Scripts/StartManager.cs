@@ -42,8 +42,9 @@ public class StartManager : MonoBehaviour {
             int randomY = Random.Range(0,4);
             print("X Rotation : " + randomX);
             print("Y Rotation : " + randomY);
-            Quaternion randomRotation = Quaternion.Euler(possibleAngles[randomX], possibleAngles[randomY], 0);
-            GameObject newDice = (GameObject)Instantiate(dicePrefab, new Vector3(x, 0f, 0f), randomRotation);
+            // Quaternion randomRotation = Quaternion.Euler(possibleAngles[randomX], possibleAngles[randomY], 0);            
+            GameObject newDice = (GameObject)Instantiate(dicePrefab, new Vector3(x, 0f, 0f), Quaternion.Euler(0,0,0));
+            newDice.transform.eulerAngles = new Vector3(possibleAngles[randomX], possibleAngles[randomY], 0);
             diceList.Add(newDice);                        
             int diceSide = newDice.GetComponentInChildren<Dice>().side;
             diceValueSum += diceSide;
@@ -67,7 +68,7 @@ public class StartManager : MonoBehaviour {
         timerText.text = "Time : " + Mathf.Ceil(timer).ToString();
 
         if (timer < 0) {
-            print("game over");
+            // print("game over");
         }
 
 	}
