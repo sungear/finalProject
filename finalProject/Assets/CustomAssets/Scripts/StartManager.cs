@@ -44,7 +44,7 @@ public class StartManager : MonoBehaviour {
             print("Y Rotation : " + randomY);
             // Quaternion randomRotation = Quaternion.Euler(possibleAngles[randomX], possibleAngles[randomY], 0);            
             GameObject newDice = (GameObject)Instantiate(dicePrefab, new Vector3(x, 0f, 0f), Quaternion.Euler(0,0,0));
-            newDice.transform.eulerAngles = new Vector3(possibleAngles[randomX], possibleAngles[randomY], 0);
+            newDice.transform.GetChild(0).eulerAngles = new Vector3(possibleAngles[randomX], possibleAngles[randomY], 0);
             diceList.Add(newDice);                        
             int diceSide = newDice.GetComponentInChildren<Dice>().side;
             diceValueSum += diceSide;
