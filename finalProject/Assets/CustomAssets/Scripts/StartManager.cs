@@ -24,6 +24,12 @@ public class StartManager : MonoBehaviour {
 
     private List<GameObject> diceList;
 
+    public int diceSide;
+
+    public GameObject selectedDice;
+    
+    public GameObject selectedCam;
+
     DiceRotation diceRotation;
 
 
@@ -45,9 +51,7 @@ public class StartManager : MonoBehaviour {
             // Quaternion randomRotation = Quaternion.Euler(possibleAngles[randomX], possibleAngles[randomY], 0);            
             GameObject newDice = (GameObject)Instantiate(dicePrefab, new Vector3(x, 0f, 0f), Quaternion.Euler(0,0,0));
             newDice.transform.GetChild(0).eulerAngles = new Vector3(possibleAngles[randomX], possibleAngles[randomY], 0);
-            diceList.Add(newDice);                        
-            int diceSide = newDice.GetComponentInChildren<Dice>().side;
-            diceValueSum += diceSide;
+            diceList.Add(newDice);
         }
 
         minSum = diceNumber;
@@ -78,14 +82,14 @@ public class StartManager : MonoBehaviour {
     // }
 
     void calculateDiceValue() {
-        if (Input.GetKeyUp(KeyCode.Space)) {
+        // if (Input.GetKeyUp(KeyCode.Space)) {
             if (diceValueSum > 0) {
                 diceValueSum = 0;
             }          
             for (int i = 0; i < diceList.Count; i++) {
-                int diceSide = diceList[i].GetComponentInChildren<Dice>().side;
+                diceSide = diceList[i].GetComponentInChildren<Dice>().side;
                 diceValueSum += diceSide;
             }
-        }
+        // }
     }
 }

@@ -7,16 +7,16 @@ public class Rotation : MonoBehaviour {
     Quaternion startRot;
     Quaternion endRot;
     float rotationSpeed;
-    bool click;
+    bool begin;
     bool turning;
 
 	// Use this for initialization
 	void Start () {
-        click = false;
-        rotationSpeed = 0;
-        turning = false;
-        startRot = transform.rotation;
-        endRot = transform.rotation;
+        // initial = true;
+        // rotationSpeed = 0;
+        // turning = false;
+        // startRot = transform.rotation;
+        // endRot = transform.rotation;
     }
 	
 	// Update is called once per frame
@@ -24,48 +24,58 @@ public class Rotation : MonoBehaviour {
 	}
 
     public void Rotate(Transform dice) {
+        // if (!begin) {
+        //     startRot = dice.GetComponent<Dice>().startRot;
+        //     endRot = dice.GetComponent<Dice>().startRot;
+        //     begin = true;
+        //     // turning = dice.GetComponent<Dice>().turning;
+        // }
 
-        if (!turning) {
+        if (!dice.GetComponent<Dice>().turning) {
 
             if (Input.GetKeyUp(KeyCode.LeftArrow)) {
-                startRot = dice.rotation;
+                dice.GetComponent<Dice>().startRot = dice.rotation;
                 dice.Rotate(0, 90, 0, Space.World);
-                endRot = dice.rotation;
+                dice.GetComponent<Dice>().endRot = dice.rotation;
                 rotationSpeed = 0;
-                turning = true;
+                // turning = true;
+                dice.GetComponent<Dice>().turning = true;
             }
 
             else if (Input.GetKeyUp(KeyCode.RightArrow)) {
-                startRot = dice.rotation;
+                dice.GetComponent<Dice>().startRot = dice.rotation;
                 dice.Rotate(0, -90, 0, Space.World);
-                endRot = dice.rotation;
+                dice.GetComponent<Dice>().endRot = dice.rotation;
                 rotationSpeed = 0;
-                turning = true;
+                // turning = true;
+                dice.GetComponent<Dice>().turning = true;
             }
 
             else if (Input.GetKeyUp(KeyCode.UpArrow)) {
-                startRot = dice.rotation;
+                dice.GetComponent<Dice>().startRot = dice.rotation;
                 dice.Rotate(90, 0, 0, Space.World);
-                endRot = dice.rotation;
+                dice.GetComponent<Dice>().endRot = dice.rotation;
                 rotationSpeed = 0;
-                turning = true;
+                // turning = true;
+                dice.GetComponent<Dice>().turning = true;
             }
 
             else if (Input.GetKeyUp(KeyCode.DownArrow)) {
-                startRot = dice.rotation;
+                dice.GetComponent<Dice>().startRot = dice.rotation;
                 dice.Rotate(-90, 0, 0, Space.World);
-                endRot = dice.rotation;
+                dice.GetComponent<Dice>().endRot = dice.rotation;
                 rotationSpeed = 0;
-                turning = true;
+                // turning = true;
+                dice.GetComponent<Dice>().turning = true;
             }  
         }
 
         rotationSpeed += Time.deltaTime*10.0f;      
                  
-        dice.rotation = Quaternion.Slerp(startRot, endRot, rotationSpeed * 0.1f);
-        if (Quaternion.Angle(endRot, dice.rotation) <= 1.0){
-            turning = false;
+        dice.rotation = Quaternion.Slerp(dice.GetComponent<Dice>().startRot, dice.GetComponent<Dice>().endRot, rotationSpeed * 0.1f);
+        if (Quaternion.Angle(dice.GetComponent<Dice>().endRot, dice.rotation) <= 1.0){
+            // turning = false;
+            dice.GetComponent<Dice>().turning = false;
         }
     }
-
 }

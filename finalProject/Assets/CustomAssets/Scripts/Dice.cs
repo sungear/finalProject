@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Dice : MonoBehaviour {
@@ -10,6 +11,17 @@ public class Dice : MonoBehaviour {
     public int leftSide = 0;
     public int rightSide = 0;
 
+    public Quaternion startRot;
+    public Quaternion endRot;
+    public bool turning;
+
+    public Text frontSideText;
+    public Text backSideText;
+    public Text upSideText;
+    public Text downSideText;
+    public Text leftSideText;
+    public Text rightSideText;
+
 	// Use this for initialization
 	void Awake () {
         side = getDiceFaceValue(Vector3.back);
@@ -19,15 +31,28 @@ public class Dice : MonoBehaviour {
         leftSide = getDiceFaceValue(Vector3.left);
         rightSide = getDiceFaceValue(Vector3.right);
 	}
+
+    void Start () {        
+
+        startRot = transform.rotation;
+        endRot = transform.rotation;
+        turning = false;
+    }
 	
 	// Update is called once per frame
-	void Update () {	   
+	void Update () {
         side = getDiceFaceValue(Vector3.back);
+        // frontSideText.text = "" + side;
         backSide = getDiceFaceValue(Vector3.forward);
+        // backSideText.text = "" + backSide;
         upSide = getDiceFaceValue(Vector3.up);
+        // upSideText.text = "" + upSide;
         downSide = getDiceFaceValue(Vector3.down);
+        // downSideText.text = "" + downSide;
         leftSide = getDiceFaceValue(Vector3.left);
+        // leftSideText.text = "" + leftSide;
         rightSide = getDiceFaceValue(Vector3.right);
+        // rightSideText.text = "" + rightSide;
        // print("side = " + side);
 	}
 
