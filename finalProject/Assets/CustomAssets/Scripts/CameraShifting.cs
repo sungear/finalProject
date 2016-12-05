@@ -36,7 +36,7 @@ public class CameraShifting : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        RaySelectedComputer();        
+        RaySelectedComputer();      
         if (selected) {
             rotation.Rotate(dice);
         }
@@ -49,7 +49,6 @@ public class CameraShifting : MonoBehaviour {
 	}
 
     void RaySelectedComputer() {
-
         if (Input.GetMouseButtonDown(0)) {
             if (!dice.GetComponent<Dice>().turning) {                
                 RaycastHit hit;
@@ -57,11 +56,13 @@ public class CameraShifting : MonoBehaviour {
                 if(Physics.Raycast(ray, out hit)) {
                     rayCam = hit.transform.Find("ThisCamera").GetComponentInChildren<Camera>();
                     dice = hit.transform.Find("MyDice00");
-                    if (hit.transform.gameObject == this.gameObject && !selected) {
-                        startManager.GetComponent<StartManager>().selectedDice = this.gameObject;
-                        selected = true;
-                        thisCam.SetActive(true);
-                        mainCam.SetActive(false);
+                    if (hit.transform.gameObject == this.gameObject) {
+                        if (startManager.GetComponent<StartManager>().selectedDice != this.gameObject) {                            
+                            startManager.GetComponent<StartManager>().selectedDice = this.gameObject;
+                            selected = true;
+                            thisCam.SetActive(true);
+                            mainCam.SetActive(false);                            
+                        }
                     }
                     else {
                         selected = false;
@@ -71,7 +72,8 @@ public class CameraShifting : MonoBehaviour {
             }
         }
         else if (Input.GetMouseButtonDown(1)) {
-            if (!dice.GetComponent<Dice>().turning) {            
+            if (!dice.GetComponent<Dice>().turning) {
+                startManager.GetComponent<StartManager>().selectedDice = null;      
                 selected = false;
                 thisCam.SetActive(false);
                 mainCam.SetActive(true);
@@ -89,11 +91,13 @@ public class CameraShifting : MonoBehaviour {
                 if(Physics.Raycast(ray, out hit)) {
                     rayCam = hit.transform.Find("ThisCamera").GetComponentInChildren<Camera>();
                     dice = hit.transform.Find("MyDice00");
-                    if (hit.transform.gameObject == this.gameObject && !selected) {
-                        startManager.GetComponent<StartManager>().selectedDice = this.gameObject;
-                        selected = true;
-                        thisCam.SetActive(true);
-                        mainCam.SetActive(false);
+                    if (hit.transform.gameObject == this.gameObject) {
+                        if (startManager.GetComponent<StartManager>().selectedDice != this.gameObject) {                            
+                            startManager.GetComponent<StartManager>().selectedDice = this.gameObject;
+                            selected = true;
+                            thisCam.SetActive(true);
+                            mainCam.SetActive(false);                            
+                        }
                     }
                     else {
                         selected = false;
@@ -101,6 +105,7 @@ public class CameraShifting : MonoBehaviour {
                     }
                 }
                 else {
+                    startManager.GetComponent<StartManager>().selectedDice = null;
                     selected = false;
                     mainCam.SetActive(true);
                     rayCam = mainCam.GetComponentInChildren<Camera>();
