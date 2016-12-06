@@ -24,7 +24,7 @@ public class Rotation : MonoBehaviour {
 
                 if (Input.GetKeyUp(KeyCode.LeftArrow)) {
                     dice.GetComponent<Dice>().startRot = dice.rotation;
-                    dice.Rotate(0, 90, 0, Space.World);
+                    dice.Rotate(0, 0, 90, Space.World);
                     dice.GetComponent<Dice>().endRot = dice.rotation;
                     rotationSpeed = 0;
                     GameObject.Find("StartManager").GetComponent<FinishRound>().diceTurn--;
@@ -33,7 +33,7 @@ public class Rotation : MonoBehaviour {
 
                 else if (Input.GetKeyUp(KeyCode.RightArrow)) {
                     dice.GetComponent<Dice>().startRot = dice.rotation;
-                    dice.Rotate(0, -90, 0, Space.World);
+                    dice.Rotate(0, 0, -90, Space.World);
                     dice.GetComponent<Dice>().endRot = dice.rotation;
                     rotationSpeed = 0;
                     GameObject.Find("StartManager").GetComponent<FinishRound>().diceTurn--;

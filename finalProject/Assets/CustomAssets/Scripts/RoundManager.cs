@@ -19,7 +19,7 @@ public class RoundManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        timer = 50f;
+        timer = PlayerPrefs.GetFloat("Timer");
 
         // calculateGoalSum = GetComponent<CalculateGoalSum>();
         diceNumber = Random.Range(minDiceNumber, maxDiceNumber+1);
@@ -40,8 +40,7 @@ public class RoundManager : MonoBehaviour {
         timer -= Time.deltaTime;
         timerText.text = "Time : " + Mathf.Ceil(timer).ToString();
 
-        if (timer < 0) {
-            // print("game over");
+        if (timer <= 0) {
         }
     }
 

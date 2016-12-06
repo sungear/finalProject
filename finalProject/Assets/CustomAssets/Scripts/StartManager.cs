@@ -15,20 +15,16 @@ public class StartManager : MonoBehaviour {
 
     public Text goalSumText;
     public Text timerText;
+    public Text actualSumText;
 
     public int diceSide;
     public int diceValueSum;
-
-    public int pocketMoney;
-    public int betMoney;
 
     public GameObject selectedDice;    
     public GameObject selectedCam;
 
 	// Use this for initialization
 	void Start () {
-        pocketMoney = PlayerPrefs.GetInt("PocketMoney");
-        betMoney = PlayerPrefs.GetInt("BetMoney");
         diceNumber = PlayerPrefs.GetInt("DiceNumber");
 
         diceList = new List<GameObject>();
@@ -53,14 +49,16 @@ public class StartManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         calculateDiceValue();
+        actualSumText.text = "Actual : " + diceValueSum;
 
         goalSumText.text = "Goal : " + goalSum.ToString();
 
-        timer -= Time.deltaTime;
-        timerText.text = "Time : " + Mathf.Ceil(timer).ToString();
-
-        if (timer < 0) {
-            // print("game over");
+        if (!GameObject.Find("StartManager").GetComponentInChildren<FinishRound>().finishing) {
+            timer -= Time.deltaTime;
+            timerText.text = "Time : " + Mathf.Ceil(timer).ToString();
+        }
+        if (timer <= 0) {
+            GameObject.Find("StartManager").GetComponentInChildren<FinishRound>().timeOut = true;
             timer = 0;
         }
 
@@ -71,7 +69,7 @@ public class StartManager : MonoBehaviour {
             diceValueSum = 0;
         }          
         for (int i = 0; i < diceList.Count; i++) {
-            diceSide = diceList[i].GetComponentInChildren<Dice>().side;
+            diceSide = diceList[i].GetComponentInChildren<Dice>().upSide;
             diceValueSum += diceSide;
         }
     }

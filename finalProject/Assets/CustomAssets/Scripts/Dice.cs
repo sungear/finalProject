@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 
 public class Dice : MonoBehaviour {
 
-    public int side = 0;
+    public int forwardSide = 0;
     public int backSide = 0;
     public int upSide = 0;
     public int downSide = 0;
@@ -15,16 +14,9 @@ public class Dice : MonoBehaviour {
     public Quaternion endRot;
     public bool turning;
 
-    public Text frontSideText;
-    public Text backSideText;
-    public Text upSideText;
-    public Text downSideText;
-    public Text leftSideText;
-    public Text rightSideText;
-
 	// Use this for initialization
 	void Awake () {
-        side = getDiceFaceValue(Vector3.back);
+        forwardSide = getDiceFaceValue(Vector3.back);
         backSide = getDiceFaceValue(Vector3.forward);
         upSide = getDiceFaceValue(Vector3.up);
         downSide = getDiceFaceValue(Vector3.down);
@@ -41,8 +33,8 @@ public class Dice : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        side = getDiceFaceValue(Vector3.back);
-        // frontSideText.text = "" + side;
+        forwardSide = getDiceFaceValue(Vector3.back);
+        // frontSideText.text = "" + forwardSide;
         backSide = getDiceFaceValue(Vector3.forward);
         // backSideText.text = "" + backSide;
         upSide = getDiceFaceValue(Vector3.up);

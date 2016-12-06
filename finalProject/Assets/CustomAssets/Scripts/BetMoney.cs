@@ -6,7 +6,7 @@ public class BetMoney : MonoBehaviour {
 
     public Text pocketMoneyText;
     public Text betMoneyText;
-    public int pocketMoney = 200;
+    public int pocketMoney;
     public int betMoney = 50;
     public int minimalBet = 50;
 
@@ -15,6 +15,7 @@ public class BetMoney : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        pocketMoney = PlayerPrefs.GetInt("PocketMoney");
         pocketMoneyText.text = "You have " + pocketMoney + " €";
 	}
 	
