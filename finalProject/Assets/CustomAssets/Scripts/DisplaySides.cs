@@ -18,17 +18,17 @@ public class DisplaySides : MonoBehaviour {
     public Text rightSideText;
 
     Dice dice;
-    GameObject selectedDice;
+    public GameObject selectedDice;
     public List<GameObject> sideDisplay;
-    GameObject side1;
-    GameObject side2;
+    // public GameObject side1;
+    // public GameObject side2;
 
 	// Use this for initialization
 	void Start () {
-        // sideDisplay.Add(GameObject.Find("SideDisplay"));
-        // sideDisplay.Add(GameObject.Find("SideDisplay").transform.Find("back").gameObject);
-        // sideDisplay.Add(GameObject.Find("SideDisplay").transform.Find("right").gameObject);
-        // sideDisplay.Add(GameObject.Find("SideDisplay").transform.Find("left").gameObject);
+        sideDisplay.Add(GameObject.Find("SideDisplay").transform.Find("forward").gameObject);
+        sideDisplay.Add(GameObject.Find("SideDisplay").transform.Find("back").gameObject);
+        sideDisplay.Add(GameObject.Find("SideDisplay").transform.Find("right").gameObject);
+        sideDisplay.Add(GameObject.Find("SideDisplay").transform.Find("left").gameObject);
         for(int i = 0; i < sideDisplay.Count; i++) {
             sideDisplay[i].SetActive(false);
         }
@@ -50,21 +50,29 @@ public class DisplaySides : MonoBehaviour {
             backSideText.text = "" + back;
             rightSideText.text = "" + right;
             leftSideText.text = "" + left;
+
+            if (GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1 == null 
+                && GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2 == null) {
+                print("ASSIGNED");
+                DisplayChoosenSides(sideDisplay/*, GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1,
+                    GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2*/);
+
+                // GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1.SetActive(true);                
+                // GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2.SetActive(true);
+            }
        }
 	}
 
-    void ChooseSideToDisplay(List<GameObject> sideDisplay) {
-        int first = Random.Range(0,sideDisplay.Count);
-        side1 = sideDisplay[first];
-        sideDisplay.Remove(side1);
-        int second = Random.Range(0,sideDisplay.Count);
-        side2 = sideDisplay[second];
-        sideDisplay.Remove(side2);
+    GameObject ChooseSideToDisplay(List<GameObject> sideDisplay) {
+        int rd = Random.Range(0,sideDisplay.Count);        
+        return sideDisplay[rd];
     }
 
-    void DisplayChoosenSides(List<GameObject> sideDisplay) {
-        for(int i = 0; i < sideDisplay.Count; i++) {
-            sideDisplay[i].SetActive(true);
-        }
+    void DisplayChoosenSides(List<GameObject> sideDisplay/*, GameObject side1, GameObject side2*/) {
+        print("Truly assigned");
+        GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1 = ChooseSideToDisplay(sideDisplay);
+        sideDisplay.Remove(GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1);
+        GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2 = ChooseSideToDisplay(sideDisplay);
+        sideDisplay.Add(GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1);
     }
 }

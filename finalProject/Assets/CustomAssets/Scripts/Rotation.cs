@@ -23,15 +23,27 @@ public class Rotation : MonoBehaviour {
             if (!dice.GetComponent<Dice>().turning) {
 
                 if (Input.GetKeyUp(KeyCode.LeftArrow)) {
+                    // GameObject.Find("StartManager").GetComponent<DisplaySides>().side1.SetActive(false);
+                    // GameObject.Find("StartManager").GetComponent<DisplaySides>().side2.SetActive(false);
+                    // GameObject.Find("StartManager").GetComponent<DisplaySides>().side1 = null;
+                    // GameObject.Find("StartManager").GetComponent<DisplaySides>().side2 = null;
+                    GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1.SetActive(false);
+                    GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2.SetActive(false);
+                    GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1 = null;
+                    GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2 = null;
+                    GameObject.Find("StartManager").GetComponent<FinishRound>().diceTurn--;
                     dice.GetComponent<Dice>().startRot = dice.rotation;
                     dice.Rotate(0, 0, 90, Space.World);
                     dice.GetComponent<Dice>().endRot = dice.rotation;
                     rotationSpeed = 0;
-                    GameObject.Find("StartManager").GetComponent<FinishRound>().diceTurn--;
                     dice.GetComponent<Dice>().turning = true;
                 }
 
                 else if (Input.GetKeyUp(KeyCode.RightArrow)) {
+                    GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1.SetActive(false);
+                    GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2.SetActive(false);
+                    GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1 = null;
+                    GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2 = null;
                     dice.GetComponent<Dice>().startRot = dice.rotation;
                     dice.Rotate(0, 0, -90, Space.World);
                     dice.GetComponent<Dice>().endRot = dice.rotation;
@@ -41,6 +53,10 @@ public class Rotation : MonoBehaviour {
                 }
 
                 else if (Input.GetKeyUp(KeyCode.UpArrow)) {
+                    GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1.SetActive(false);
+                    GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2.SetActive(false);
+                    GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1 = null;
+                    GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2 = null;
                     dice.GetComponent<Dice>().startRot = dice.rotation;
                     dice.Rotate(90, 0, 0, Space.World);
                     dice.GetComponent<Dice>().endRot = dice.rotation;
@@ -50,6 +66,10 @@ public class Rotation : MonoBehaviour {
                 }
 
                 else if (Input.GetKeyUp(KeyCode.DownArrow)) {
+                    GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1.SetActive(false);
+                    GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2.SetActive(false);
+                    GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1 = null;
+                    GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2 = null;
                     dice.GetComponent<Dice>().startRot = dice.rotation;
                     dice.Rotate(-90, 0, 0, Space.World);
                     dice.GetComponent<Dice>().endRot = dice.rotation;

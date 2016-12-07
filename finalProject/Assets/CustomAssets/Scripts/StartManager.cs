@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class StartManager : MonoBehaviour {
 
     public GameObject dicePrefab;
-    private List<GameObject> diceList;
+    public List<GameObject> diceList;
     int[] possibleAngles = { 0, 90, 180, 270 };
 
     int diceNumber;
@@ -43,7 +43,7 @@ public class StartManager : MonoBehaviour {
         goalSumText.text = "Goal : " + goalSum.ToString();
 
         timer = PlayerPrefs.GetFloat("Timer");
-        timerText.text = "Time : " + timer.ToString(); 
+        timerText.text = "Time : " + timer.ToString();
 	}
 	
 	// Update is called once per frame
@@ -72,5 +72,15 @@ public class StartManager : MonoBehaviour {
             diceSide = diceList[i].GetComponentInChildren<Dice>().upSide;
             diceValueSum += diceSide;
         }
+    }
+
+    public void DisplayDices(List<GameObject> diceList, GameObject selectedDice, bool displayStatus) {
+        // diceList.Remove(selectedDice);
+        for(int i = 0; i < diceList.Count; i++) {
+            if (diceList[i] != selectedDice) {
+                diceList[i].SetActive(displayStatus); 
+            }           
+        }
+        // diceList.Add(selectedDice);
     }
 }

@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraShifting : MonoBehaviour {
     public GameObject mainCam;
     public GameObject thisCam;
-    public GameObject openDice;
+    public GameObject sideDisplay;
     public bool selected;
     Rotation rotation;
     Transform dice;
@@ -20,7 +20,7 @@ public class CameraShifting : MonoBehaviour {
 	void Start () {
         mainCam = GameObject.Find("MainCamera");
         thisCam = transform.Find("ThisCamera").gameObject;
-        openDice = GameObject.Find("OpenDice");
+        sideDisplay = GameObject.Find("SideDisplay");
         dice = transform.Find("MyDice00");
         hideSides = transform.Find("HideDices").gameObject;
         startManager = GameObject.Find("StartManager");
@@ -44,12 +44,16 @@ public class CameraShifting : MonoBehaviour {
             rotation.Rotate(dice);
         }
         if (mainCam.activeSelf) {
-            openDice.SetActive(false);
+            if (rayCam != mainCam.GetComponentInChildren<Camera>()) {
+                rayCam = mainCam.GetComponentInChildren<Camera>();
+            }
+            sideDisplay.SetActive(false);
             hideSides.SetActive(true);
         }
         else {
-            openDice.SetActive(true);
+            sideDisplay.SetActive(true);
             hideSides.SetActive(false);
+
         }
 	}
 
@@ -63,8 +67,11 @@ public class CameraShifting : MonoBehaviour {
                         rayCam = hit.transform.Find("ThisCamera").GetComponentInChildren<Camera>();
                         dice = hit.transform.Find("MyDice00");
                         if (hit.transform.gameObject == this.gameObject) {
+                            print("HIT : " + hit.transform.gameObject);
                             if (startManager.GetComponent<StartManager>().selectedDice != this.gameObject) {                            
                                 startManager.GetComponent<StartManager>().selectedDice = this.gameObject;
+                                startManager.GetComponent<StartManager>().DisplayDices(startManager.GetComponent<StartManager>().diceList,
+                                    startManager.GetComponent<StartManager>().selectedDice, false);
                                 selected = true;
                                 thisCam.SetActive(true);
                                 mainCam.SetActive(false);                            
@@ -79,11 +86,20 @@ public class CameraShifting : MonoBehaviour {
             }
             else if (Input.GetMouseButtonDown(1)) {
                 if (!dice.GetComponent<Dice>().turning) {
-                    startManager.GetComponent<StartManager>().selectedDice = null;      
+                    startManager.GetComponent<StartManager>().DisplayDices(startManager.GetComponent<StartManager>().diceList,
+                        startManager.GetComponent<StartManager>().selectedDice, true);
+                    startManager.GetComponent<StartManager>().selectedDice = null;     
                     selected = false;
                     thisCam.SetActive(false);
                     mainCam.SetActive(true);
-                    rayCam = mainCam.GetComponentInChildren<Camera>();
+                    // rayCam = mainCam.GetComponentInChildren<Camera>();
+
+                    // if (GameObject.Find("StartManager").GetComponent<DisplaySides>().side1 != null) {                                    
+                    //     GameObject.Find("StartManager").GetComponent<DisplaySides>().side1.SetActive(false);
+                    //     GameObject.Find("StartManager").GetComponent<DisplaySides>().side2.SetActive(false);
+                    //     GameObject.Find("StartManager").GetComponent<DisplaySides>().side1 = null;
+                    //     GameObject.Find("StartManager").GetComponent<DisplaySides>().side2 = null;
+                    // }
                 }
             }
         }

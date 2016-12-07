@@ -14,6 +14,9 @@ public class Dice : MonoBehaviour {
     public Quaternion endRot;
     public bool turning;
 
+    public GameObject side1;
+    public GameObject side2;
+
 	// Use this for initialization
 	void Awake () {
         forwardSide = getDiceFaceValue(Vector3.back);
@@ -46,6 +49,12 @@ public class Dice : MonoBehaviour {
         rightSide = getDiceFaceValue(Vector3.right);
         // rightSideText.text = "" + rightSide;
        // print("side = " + side);
+        if (GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice == this.transform.parent.gameObject) {
+            if(this.side1 != null && this.side2 != null) {
+                side1.SetActive(true);
+                side2.SetActive(true);
+            }
+        }
 	}
 
     int getDiceFaceValue(Vector3 vector) {
