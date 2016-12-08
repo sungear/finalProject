@@ -24,6 +24,7 @@ public class FinishRound : MonoBehaviour {
     public bool confirmed;
     public bool noTurn;
     public float countDown;
+    bool won;
 
     public Text winPopUpText;
     public Text lostPopUpText;
@@ -70,6 +71,10 @@ public class FinishRound : MonoBehaviour {
                     noTurn = true;
                     state++;
                 }
+                else if (GetComponent<StartManager>().diceValueSum == GetComponent<StartManager>().goalSum) {
+                    won = true;
+                    state++;
+                }
                 else if (confirmed) {
                     state++;
                 }
@@ -86,6 +91,11 @@ public class FinishRound : MonoBehaviour {
                 }
                 else if (noTurn) {
                     popUpWindows.GetComponentInChildren<Animator>().Play("NoTurnPopUp");
+                }
+                else if (won) {                    
+                    Invoke("HandleAnimation", 0);
+                    state++;
+                    break;
                 }
                 else if (confirmed) {                    
                     Invoke("HandleAnimation", 0);

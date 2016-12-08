@@ -16,6 +16,9 @@ public class CameraShifting : MonoBehaviour {
 
     public Camera rayCam;
     public GameObject hideSides;
+
+    GameObject confirmButton;
+    GameObject returnButton;
 	// Use this for initialization
 	void Start () {
         mainCam = GameObject.Find("MainCamera");
@@ -23,6 +26,8 @@ public class CameraShifting : MonoBehaviour {
         sideDisplay = GameObject.Find("SideDisplay");
         dice = transform.Find("MyDice00");
         hideSides = transform.Find("HideDices").gameObject;
+        confirmButton = GameObject.Find("ConfirmButtonParent");
+        returnButton = GameObject.Find("ReturnButtonParent");
         startManager = GameObject.Find("StartManager");
         rotation = GetComponent<Rotation>();
         turning = false;
@@ -33,6 +38,9 @@ public class CameraShifting : MonoBehaviour {
         thisCam.SetActive(false);
         mainCam.SetActive(true);
         hideSides.SetActive(true);
+
+        confirmButton.SetActive(true);
+        returnButton.SetActive(true);
 
         rayCam =  mainCam.GetComponentInChildren<Camera>();
 	}
@@ -49,11 +57,14 @@ public class CameraShifting : MonoBehaviour {
             }
             sideDisplay.SetActive(false);
             hideSides.SetActive(true);
+            confirmButton.SetActive(true);
+            returnButton.SetActive(false);
         }
         else {
             sideDisplay.SetActive(true);
             hideSides.SetActive(false);
-
+            returnButton.SetActive(true);
+            confirmButton.SetActive(false);
         }
 	}
 
@@ -86,20 +97,7 @@ public class CameraShifting : MonoBehaviour {
             }
             else if (Input.GetMouseButtonDown(1)) {
                 if (!dice.GetComponent<Dice>().turning) {
-                    startManager.GetComponent<StartManager>().DisplayDices(startManager.GetComponent<StartManager>().diceList,
-                        startManager.GetComponent<StartManager>().selectedDice, true);
-                    startManager.GetComponent<StartManager>().selectedDice = null;     
-                    selected = false;
-                    thisCam.SetActive(false);
-                    mainCam.SetActive(true);
-                    // rayCam = mainCam.GetComponentInChildren<Camera>();
-
-                    // if (GameObject.Find("StartManager").GetComponent<DisplaySides>().side1 != null) {                                    
-                    //     GameObject.Find("StartManager").GetComponent<DisplaySides>().side1.SetActive(false);
-                    //     GameObject.Find("StartManager").GetComponent<DisplaySides>().side2.SetActive(false);
-                    //     GameObject.Find("StartManager").GetComponent<DisplaySides>().side1 = null;
-                    //     GameObject.Find("StartManager").GetComponent<DisplaySides>().side2 = null;
-                    // }
+                    ReturnToMain();
                 }
             }
         }
@@ -107,8 +105,20 @@ public class CameraShifting : MonoBehaviour {
             startManager.GetComponent<StartManager>().selectedDice = null;      
             selected = false;
         }
-
     }
+
+    public void ReturnToMain() {
+        if (!dice.GetComponent<Dice>().turning) {
+            startManager.GetComponent<StartManager>().DisplayDices(startManager.GetComponent<StartManager>().diceList,
+                startManager.GetComponent<StartManager>().selectedDice, true);
+            startManager.GetComponent<StartManager>().selectedDice = null;     
+            selected = false;
+            thisCam.SetActive(false);
+            mainCam.SetActive(true);
+            // rayCam = mainCam.GetComponentInChildren<Camera>();
+        }
+    }
+ 
 
     void RaySelectedPhone() {        
         if (Input.GetMouseButtonDown(0)) {

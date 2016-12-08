@@ -53,12 +53,12 @@ public class StartManager : MonoBehaviour {
 
         goalSumText.text = "Goal : " + goalSum.ToString();
 
-        if (!GameObject.Find("StartManager").GetComponentInChildren<FinishRound>().finishing) {
+        if (!GetComponent<FinishRound>().finishing) {
             timer -= Time.deltaTime;
             timerText.text = "Time : " + Mathf.Ceil(timer).ToString();
         }
         if (timer <= 0) {
-            GameObject.Find("StartManager").GetComponentInChildren<FinishRound>().timeOut = true;
+            GetComponent<FinishRound>().timeOut = true;
             timer = 0;
         }
 
@@ -82,5 +82,16 @@ public class StartManager : MonoBehaviour {
             }           
         }
         // diceList.Add(selectedDice);
+    }
+
+    public void ReturnToMainCamera() {
+        if (!selectedDice.transform.Find("MyDice00").GetComponent<Dice>().turning) {
+            DisplayDices(diceList, selectedDice, true);     
+            selectedDice.GetComponent<CameraShifting>().selected = false;
+            selectedDice.GetComponent<CameraShifting>().thisCam.SetActive(false);
+            selectedDice.GetComponent<CameraShifting>().mainCam.SetActive(true);
+            selectedDice = null;
+            // rayCam = mainCam.GetComponentInChildren<Camera>();
+        }
     }
 }
