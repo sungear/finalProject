@@ -14,7 +14,7 @@ public class FinishRound : MonoBehaviour {
 
     float timer;
 
-    public int diceTurn = 7;
+    public int diceTurn = 6;
 
     public GameObject popUpWindows;
 
@@ -43,14 +43,14 @@ public class FinishRound : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        diceTurn = 7;
+        // diceTurn = 6;
         popUpWindows.SetActive(false);
 	}
 	
 	// Update is called once per frame
 	void Update () {        
-        if (diceTurn > 0) {
-            turnText.text = "Turn : " + (diceTurn-1);
+        if (diceTurn >= 0) {
+            turnText.text = "Turn : " + (diceTurn);
         }
         HandleState();       
 	}
@@ -67,8 +67,8 @@ public class FinishRound : MonoBehaviour {
                 if (timeOut) {
                     state++;
                 }
-                else if (diceTurn <= 0) {
-                    noTurn = true;
+                else if (noTurn) {
+                    // noTurn = true;
                     state++;
                 }
                 else if (GetComponent<StartManager>().diceValueSum == GetComponent<StartManager>().goalSum) {

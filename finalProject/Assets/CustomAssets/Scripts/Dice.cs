@@ -49,12 +49,13 @@ public class Dice : MonoBehaviour {
         rightSide = getDiceFaceValue(Vector3.right);
         // rightSideText.text = "" + rightSide;
        // print("side = " + side);
-        if (GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice == this.transform.parent.gameObject) {
-            if(this.side1 != null && this.side2 != null) {
-                side1.SetActive(true);
-                side2.SetActive(true);
-            }
-        }
+        
+        // if (GameObject.Find("StartManager").GetComponent<StartManager>().selectedDice == this.transform.parent.gameObject) {
+        //     if(this.side1 != null && this.side2 != null) {
+        //         side1.SetActive(true);
+        //         side2.SetActive(true);
+        //     }
+        // }
 	}
 
     int getDiceFaceValue(Vector3 vector) {

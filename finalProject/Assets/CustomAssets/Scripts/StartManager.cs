@@ -19,6 +19,7 @@ public class StartManager : MonoBehaviour {
 
     public int diceSide;
     public int diceValueSum;
+    List<int> diceSides;
 
     public GameObject selectedDice;    
     public GameObject selectedCam;
@@ -44,12 +45,16 @@ public class StartManager : MonoBehaviour {
 
         timer = PlayerPrefs.GetFloat("Timer");
         timerText.text = "Time : " + timer.ToString();
+
+        diceSides = new List<int>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
         calculateDiceValue();
-        actualSumText.text = "Actual : " + diceValueSum;
+        if ((selectedDice != null && !selectedDice.transform.Find("MyDice00").GetComponent<Dice>().turning) || selectedCam == GameObject.Find("MainCamera")) { 
+            actualSumText.text = "Actual : " + diceValueSum;
+        }
 
         goalSumText.text = "Goal : " + goalSum.ToString();
 
@@ -67,10 +72,12 @@ public class StartManager : MonoBehaviour {
     void calculateDiceValue() {
         if (diceValueSum > 0) {
             diceValueSum = 0;
-        }          
-        for (int i = 0; i < diceList.Count; i++) {
-            diceSide = diceList[i].GetComponentInChildren<Dice>().upSide;
-            diceValueSum += diceSide;
+        }
+        if ((selectedDice != null && !selectedDice.transform.Find("MyDice00").GetComponent<Dice>().turning) || selectedCam == GameObject.Find("MainCamera")) {                      
+            for (int i = 0; i < diceList.Count; i++) {
+                diceSide = diceList[i].GetComponentInChildren<Dice>().upSide;
+                diceValueSum += diceSide;
+            }
         }
     }
 

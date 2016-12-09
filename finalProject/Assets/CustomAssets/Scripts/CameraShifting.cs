@@ -59,12 +59,14 @@ public class CameraShifting : MonoBehaviour {
             hideSides.SetActive(true);
             confirmButton.SetActive(true);
             returnButton.SetActive(false);
+            startManager.GetComponent<StartManager>().selectedCam = mainCam;
         }
         else {
             sideDisplay.SetActive(true);
             hideSides.SetActive(false);
             returnButton.SetActive(true);
             confirmButton.SetActive(false);
+            startManager.GetComponent<StartManager>().selectedCam = thisCam;
         }
 	}
 
@@ -111,6 +113,10 @@ public class CameraShifting : MonoBehaviour {
         if (!dice.GetComponent<Dice>().turning) {
             startManager.GetComponent<StartManager>().DisplayDices(startManager.GetComponent<StartManager>().diceList,
                 startManager.GetComponent<StartManager>().selectedDice, true);
+            startManager.GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1.SetActive(false);
+            startManager.GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2.SetActive(false); 
+            startManager.GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1 = null;
+            startManager.GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2 = null;
             startManager.GetComponent<StartManager>().selectedDice = null;     
             selected = false;
             thisCam.SetActive(false);
