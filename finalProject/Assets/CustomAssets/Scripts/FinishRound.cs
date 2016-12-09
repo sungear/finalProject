@@ -110,7 +110,7 @@ public class FinishRound : MonoBehaviour {
             case 2 :
                 if (Input.GetMouseButtonDown(0)) {
                     popUpWindows.GetComponentInChildren<Animator>().SetTrigger("Finish");
-                    countDown = 1f;
+                    countDown = 3f;
                 }
                 break;
             case 3 :
