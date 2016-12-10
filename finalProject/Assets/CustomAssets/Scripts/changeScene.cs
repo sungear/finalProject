@@ -8,6 +8,10 @@ public class changeScene : MonoBehaviour {
         SceneManager.LoadScene(name);
     }
 
+    public void LeaveApplication() {
+        Application.Quit();
+    }
+
 	// Use this for initialization
 	void Start () {
 	

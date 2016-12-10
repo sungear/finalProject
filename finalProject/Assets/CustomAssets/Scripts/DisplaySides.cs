@@ -45,28 +45,28 @@ public class DisplaySides : MonoBehaviour {
             right = dice.rightSide;
             left = dice.leftSide;
 
-            if ((GetComponent<StartManager>().selectedDice != null && 
-                !GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().turning) || 
-                GetComponent<StartManager>().selectedCam == GameObject.Find("MainCamera")) {
-                upSideText.text = "" + up;
-                forwardSideText.text = "" + forward;
-                backSideText.text = "" + back;
-                rightSideText.text = "" + right;
-                leftSideText.text = "" + left;
-            }
-            // else {                
-            //     upSideText.text = "";
-            //     forwardSideText.text = "";
-            //     backSideText.text = "";
-            //     rightSideText.text = "";
-            //     leftSideText.text = "";
-            // }
-
             if (GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1 == null 
                 && GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2 == null) {
                 DisplayChoosenSides(sideDisplay);
             }
+
+            else if (GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1 != null 
+                && GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2 != null) {
+                GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1.SetActive(true);
+                GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2.SetActive(true);
+
+            }
        }
+       
+        if ((GetComponent<StartManager>().selectedDice != null && 
+            !GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().turning) || 
+            GetComponent<StartManager>().selectedCam == GameObject.Find("MainCamera")) {
+            upSideText.text = "" + up;
+            forwardSideText.text = "" + forward;
+            backSideText.text = "" + back;
+            rightSideText.text = "" + right;
+            leftSideText.text = "" + left;
+        }
 	}
 
     GameObject ChooseSideToDisplay(List<GameObject> sideDisplay) {

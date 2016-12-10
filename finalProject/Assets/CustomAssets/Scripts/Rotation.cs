@@ -44,7 +44,8 @@ public class Rotation : MonoBehaviour {
             dice.rotation = Quaternion.Slerp(dice.GetComponent<Dice>().startRot, dice.GetComponent<Dice>().endRot, rotationSpeed * 0.1f);
             if (Quaternion.Angle(dice.GetComponent<Dice>().endRot, dice.rotation) <= 1.0){
                 dice.GetComponent<Dice>().turning = false;
-                if (GameObject.Find("StartManager").GetComponent<FinishRound>().diceTurn <= 0) {
+                if (GameObject.Find("StartManager").GetComponent<FinishRound>().diceTurn <= 0 &&
+                    GameObject.Find("StartManager").GetComponent<StartManager>().diceValueSum != GameObject.Find("StartManager").GetComponent<StartManager>().goalSum) {
                     GameObject.Find("StartManager").GetComponent<FinishRound>().noTurn = true;
                 }
             }

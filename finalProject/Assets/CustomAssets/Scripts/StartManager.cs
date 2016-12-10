@@ -9,7 +9,7 @@ public class StartManager : MonoBehaviour {
     public List<GameObject> diceList;
     int[] possibleAngles = { 0, 90, 180, 270 };
 
-    int diceNumber;
+    public int diceNumber;
     public int goalSum;
     public float timer;
 
@@ -22,7 +22,7 @@ public class StartManager : MonoBehaviour {
     List<int> diceSides;
 
     public GameObject selectedDice;    
-    public GameObject selectedCam;
+    public GameObject selectedCam; 
 
 	// Use this for initialization
 	void Start () {

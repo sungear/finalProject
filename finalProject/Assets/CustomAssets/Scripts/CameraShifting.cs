@@ -19,16 +19,26 @@ public class CameraShifting : MonoBehaviour {
 
     GameObject confirmButton;
     GameObject returnButton;
-	// Use this for initialization
-	void Start () {
+
+    void Awake() { 
+        
         mainCam = GameObject.Find("MainCamera");
-        thisCam = transform.Find("ThisCamera").gameObject;
-        sideDisplay = GameObject.Find("SideDisplay");
-        dice = transform.Find("MyDice00");
         hideSides = transform.Find("HideDices").gameObject;
+        sideDisplay = GameObject.Find("SideDisplay");
         confirmButton = GameObject.Find("ConfirmButtonParent");
         returnButton = GameObject.Find("ReturnButtonParent");
+
+        mainCam.SetActive(true);       
+        sideDisplay.SetActive(true);
+        confirmButton.SetActive(true);
+        returnButton.SetActive(true);
+    }
+	// Use this for initialization
+	void Start () {
+        
         startManager = GameObject.Find("StartManager");
+        thisCam = transform.Find("ThisCamera").gameObject;
+        dice = transform.Find("MyDice00");
         rotation = GetComponent<Rotation>();
         turning = false;
         rotationSpeed = 0;
@@ -36,11 +46,7 @@ public class CameraShifting : MonoBehaviour {
         endRot = dice.rotation;
 
         thisCam.SetActive(false);
-        mainCam.SetActive(true);
         hideSides.SetActive(true);
-
-        confirmButton.SetActive(true);
-        returnButton.SetActive(true);
 
         rayCam =  mainCam.GetComponentInChildren<Camera>();
 	}
@@ -114,9 +120,7 @@ public class CameraShifting : MonoBehaviour {
             startManager.GetComponent<StartManager>().DisplayDices(startManager.GetComponent<StartManager>().diceList,
                 startManager.GetComponent<StartManager>().selectedDice, true);
             startManager.GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1.SetActive(false);
-            startManager.GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2.SetActive(false); 
-            startManager.GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side1 = null;
-            startManager.GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2 = null;
+            startManager.GetComponent<StartManager>().selectedDice.transform.Find("MyDice00").GetComponent<Dice>().side2.SetActive(false);
             startManager.GetComponent<StartManager>().selectedDice = null;     
             selected = false;
             thisCam.SetActive(false);

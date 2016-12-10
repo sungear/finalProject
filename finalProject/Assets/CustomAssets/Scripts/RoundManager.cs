@@ -19,6 +19,7 @@ public class RoundManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
         timer = PlayerPrefs.GetFloat("Timer");
 
         // calculateGoalSum = GetComponent<CalculateGoalSum>();
