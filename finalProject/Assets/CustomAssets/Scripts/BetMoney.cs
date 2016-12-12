@@ -28,12 +28,20 @@ public class BetMoney : MonoBehaviour {
         else if (betMoney == pocketMoney) {
             upBetButton.SetActive(false);
         }
+
+            // if (betMoney > minimalBet) {
+            //     downBetButton.SetActive(true);
+            // }
+
+            // else if (betMoney < pocketMoney) {
+            //     upBetButton.SetActive(true);
+            // }
 	
 	}
 
     public void AddMoney () {
         if (pocketMoney - minimalBet >= betMoney) {
-            if (betMoney == minimalBet * 2) {
+            if (betMoney == minimalBet) {
                 downBetButton.SetActive(true);
             }
             betMoney += minimalBet;
@@ -43,7 +51,7 @@ public class BetMoney : MonoBehaviour {
     public void RemoveMoney () {
         if (betMoney >= minimalBet*2) {
 
-            if (betMoney == pocketMoney - minimalBet) {
+            if (betMoney == pocketMoney) {
                 upBetButton.SetActive(true);
             }            
             betMoney -= minimalBet;
