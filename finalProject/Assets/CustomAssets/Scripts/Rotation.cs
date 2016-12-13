@@ -39,8 +39,7 @@ public class Rotation : MonoBehaviour {
                 }  
             }
 
-            rotationSpeed += Time.deltaTime*10.0f;      
-                     
+            rotationSpeed += Time.deltaTime*10.0f;
             dice.rotation = Quaternion.Slerp(dice.GetComponent<Dice>().startRot, dice.GetComponent<Dice>().endRot, rotationSpeed * 0.1f);
             if (Quaternion.Angle(dice.GetComponent<Dice>().endRot, dice.rotation) <= 1.0){
                 dice.GetComponent<Dice>().turning = false;
@@ -50,6 +49,12 @@ public class Rotation : MonoBehaviour {
                 }
             }
         }
+    }
+
+    /*float*/ void RotationAnimation(float t, float b, float c, float d)
+    {
+        //return c * Mathf.pow(2, 10 * (t / d - 1)) + b;
+        //http://gizma.com/easing/#expo1
     }
 
     void ChangeAtRotation(Transform dice, int x, int y, int z) {
